@@ -531,24 +531,24 @@ OnJoinBG: // joinbg: .@type = 0
 	}
 	// Player is on BG Map
 	if (on_ebg() == true) {
-		dispbottom(_("You are Already on BG"));
+		dispbottom(_("You are already on battlegrounds."));
 		end;
 	}
 	// eBG is Ending soon.
 	if ($@eBG_start[.bg_change] == EBG_ENDING) {
-		dispbottom(_("The Battleground is ending soon or already ended."));
+		dispbottom(_("The battlegrounds is ending soon or already ended."));
 		dispbottom(_("Cannot join current session of battleground. Please wait."));
 		end;
 	}
 	// Join Delay
 	if (bg_join_time > gettimetick(2)) {
-		dispbottom(sprintf(_$("Please wait for %d Seconds, to join the bg again"), (bg_join_time - gettimetick(2))));
+		dispbottom(sprintf(_$("Please wait for %d seconds, to join the battlegrounds again."), (bg_join_time - gettimetick(2))));
 		end;
 	}
 
 	// Minimum Level Requirement
 	if (BaseLevel < .bg_common[6]) {
-		dispbottom(sprintf(_$("You need to be atleast %d level to join bg."), .bg_common[6]));
+		dispbottom(sprintf(_$("You need to be atleast %d level to join battlegrounds."), .bg_common[6]));
 		dispbottom(sprintf(_$("Gain %d level and try to join again."), (.bg_common[6] - BaseLevel)));
 		end;
 	}
@@ -572,7 +572,7 @@ OnJoinBG: // joinbg: .@type = 0
 	// Todo: Check queue players for same IP/Mac
 	for (.@i = 0; .@i <= 2; .@i++) { // Loop all queue
 		if (.@c >= .bg_common[1]) {
-			dispbottom(_("Someone else from same IP is already On BG."));
+			dispbottom(_("Someone else from same IP is already on battlegrounds."));
 			end;
 		}
 		.@it = queueiterator(.@queue[.@i]);
@@ -608,7 +608,7 @@ OnStartBG:
 	// Check Player Count
 	if (callfunc("F_eBGMaxPlayer", .bg_mapname$[.bg_change], .bg_teams[.bg_change]) >= .bg_maxplayer[.bg_change] ||
 		$@eBG_member_size >= .bg_maxplayer[.bg_change]) {
-		dispbottom(_("Please Wait till Current BG gets Over..."));
+		dispbottom(_("Please wait until current battlegrounds is over..."));
 		end;
 	}
 	// Attempt to join
@@ -750,7 +750,7 @@ OnLeaveBG:	// Replicate in bg_team_delete_pre (called when used .@leavebg/leaved
 			if (queueremove(.queue[@BG_GlobalQueueID - 1], getcharid(CHAR_ID_ACCOUNT))) {
 				@BG_GlobalQueueID = 0;
 				if (.@dont_warn == false) {
-					dispbottom(_("Removed from Queue"));
+					dispbottom(_("Removed from queue."));
 					callsub(OnBGAnnounce, 0, 0);
 				}
 			} else {
@@ -780,7 +780,7 @@ OnLeaveBG:	// Replicate in bg_team_delete_pre (called when used .@leavebg/leaved
 			warp("SavePoint", 0, 0);
 		
 		/**/
-		if (.@ret_func) {
+		if (.@ ) {
 			return 1;
 		}
 	}
