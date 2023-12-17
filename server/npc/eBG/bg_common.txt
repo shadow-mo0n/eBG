@@ -318,13 +318,13 @@ OnInit:
 // @bgtime command
 OnTimeLeft:
 	if (!on_ebg()) {
-		dispbottom(_("You are not playing eBattlegrounds."));
+		dispbottom(_("You are not playing battlegrounds."));
 		end;
 	}
 	callfunc("F_eBG_Time_Left", @BG_ID, .bg_npcname$[@BG_ID]);
 	end;
 
-// Warps all Player out of the map.
+// Warps all player out of the map.
 OnWarpOut:
 	.@max_bg = getarraysize(.bg_enabled);
 	for (.@i = BGT_CTF; .@i <= .@max_bg; ++.@i) {
@@ -465,7 +465,7 @@ OnBGAnnounce: // Announce remaining players
 
 	// Announce if eBG is not started and more players required
 	if ($@eBG_start[.bg_change] == EBG_NOT_STARTED && .@player_joined < .@min_p) {
-		bg_announce(sprintf(_$("ExtendedBG -- %s -- %d more players to start."), .bg_name$[.bg_change], (.@min_p - .@player_joined)), .@type, .bg_colors$[.bg_change]);
+		bg_announce(sprintf(_$("Battlegrounds -- %s -- %d more players to start."), .bg_name$[.bg_change], (.@min_p - .@player_joined)), .@type, .bg_colors$[.bg_change]);
 		if (.@end == 1) {
 			end;
 		}
@@ -478,7 +478,7 @@ OnBGAnnounce: // Announce remaining players
 			.@player = bg_get_data(getd("$@"+ .bg_mapname$[.bg_change] +"_BG_id"+ .@i), 0);
 			.@msg$ += sprintf(_$("%d/%d"), .@player, .bg_maxplayer[.bg_change]);
 		}
-		bg_announce(sprintf(_$("ExtendedBG -- %s -- %s Playing"), .bg_name$[.bg_change], .@msg$), .@type, .bg_colors$[.bg_change]);
+		bg_announce(sprintf(_$("Battlegrounds -- %s -- %s playing"), .bg_name$[.bg_change], .@msg$), .@type, .bg_colors$[.bg_change]);
 	} 
 	return;
 	
@@ -486,17 +486,17 @@ OnCheckBGEnabled:
 	.@type = getarg(0);	// 2 = Party, 1 = Guild, 0 = None
 	if (.@type == 2) {	// Party
 		if (.bg_enabled_p[.bg_change] == false) {
-			dispbottom(sprintf(_$("Party Join is disabled for %s BG."), .bg_name$[.bg_change]));
+			dispbottom(sprintf(_$("Party join is disabled for %s battlegrounds."), .bg_name$[.bg_change]));
 			return false;
 		}
 	} else if (.@type == 1) { // Guild
 		if (.bg_enabled_g[.bg_change] == false) {
-			dispbottom(sprintf(_$("Guild Join is disabled for %s BG."), .bg_name$[.bg_change]));
+			dispbottom(sprintf(_$("Guild join is disabled for %s battlegrounds."), .bg_name$[.bg_change]));
 			return false;
 		}
 	} else if (.@type == 0) {
 		if (.bg_enabled[.bg_change] == false) {
-			dispbottom(sprintf(_$("Individual Join is disabled for %s BG."), .bg_name$[.bg_change]));
+			dispbottom(sprintf(_$("Individual join is disabled for %s battlegrounds."), .bg_name$[.bg_change]));
 			return false;
 		}
 	}
@@ -583,7 +583,7 @@ OnJoinBG: // joinbg: .@type = 0
 	}
 	*/
 	
-	if (getbattleflag("battle_configuration/bg_queue_townonly") && !getmapflag(strcharinfo(PC_MAP), mf_town)) {
+	if (getbattleflag("battle_configuration/bg_queue_townonly") && !getmapflag(strcharinfo(PC_MAP), MF_TOWN)) {
 		dispbottom(_("You can only join when in town."));
 		end;
 	}
@@ -653,7 +653,7 @@ OnWhisperGlobal:
 		end;
 	while(1) {
 		mes("------------------------");
-		mesf("Current BG: %s", .bg_mapname$[.bg_change]);
+		mesf("Current Battleground: %s", .bg_mapname$[.bg_change]);
 		mes("------------------------");
 		mes("Format: <ID>.) <MapName> : <Start Status>");
 		for (.@i = BGT_CTF; .@i <= .bg_common[0]; ++.@i) {
@@ -776,7 +776,7 @@ OnLeaveBG:	// Replicate in bg_team_delete_pre (called when used .@leavebg/leaved
 		}
 		
 		// Warp back to savepoint
-		if (getmapflag(strcharinfo(PC_MAP), mf_battleground))
+		if (getmapflag(strcharinfo(PC_MAP), MF_BATTLEGROUND))
 			warp("SavePoint", 0, 0);
 		
 		/**/
@@ -1030,10 +1030,10 @@ OnBGStart:	// BG Starts
 			bg_mapannounce_timer(.uid[.@id], .@Castle$, .@announce$, bc_map, .@color$, 1);
 			bg_timer_link(.uid[.@id], EBG_OP_WARP, EBG_OP_MAPANNOUNCE); // Announce only if warp is done
 		}
-		// Defender's Healer heals both
+		// Defender's healer heals both
 		if (.@id == 17)
 			.@operations &= ~EBG_OP_HEAL;
-	} else { // Other Maps have Effect while doing heal
+	} else { // Other maps have effect while doing heal
 		bg_effect_timer(.uid[.@id], EF_SANCTUARY);
 	}
 	// Start the Timer
@@ -1062,7 +1062,7 @@ OnBGStop:	//BG Stops
 
 // Therapist
 -	script	Therapist#eBG	FAKE_NPC,{
-	mes("[Therapist in battle]");
+	mes("[Therapist in Battle]");
 	mes("Just close your eyes, and take a deep breathe.");
 	mes("You can be free from pain.");
 	specialeffect(EF_HEAL, AREA, playerattached());
