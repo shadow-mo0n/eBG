@@ -104,7 +104,7 @@ typedef enum ebg_bc_types {
 
 #ifdef CHAR_SERVER_SAVE
 enum packets_ebg {
-	EBG_PACKET_MIN_MAP = 0x4000,
+	EBG_PACKET_MIN_MAP = 0x0e80,
 	/// Map to Char
 	/// <account_id>.L <char_id>.L <bg_save_flag>.Q
 	PACKET_MC_REQ_DATA,  ///< Request the Character Data (MC)
